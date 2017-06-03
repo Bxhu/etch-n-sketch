@@ -10,15 +10,16 @@
 #container {
 	width: 640px;
 	height: 640px;
-	border: 1px solid gray;
+	border: 1px solid black;
 	position: relative;
 	left: 20px;
 	top: 20px;
+	display: inline-block;
 }
 
-.col {
-	display: inline-block;
-	border: 1px solid gray;
+.cell {
+	/*border: 1px solid black;*/
+	float: left;
 }
 
 .visited {
