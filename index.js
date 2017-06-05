@@ -2,15 +2,25 @@ $(document).ready(function() {
 	var setting = "default";
 	var color = "black";
 	var speed = 0.1;
+	var hue = 0;
 	var n = 16;
+	var evenRow = false;
+	var count = 0;
 
 	createGrid(16);
 
 	//Button Functions
 
+	$("#speed").click(function() {
+		speed = prompt("Enter new shading speed 1 - 100", 10) / 100;
+	});
+
 	$("#size").click(function() {
 		$("#container").empty();
 		n = prompt("Enter new cellsize", 16);
+		hue = 0;
+		count = 0;
+		evenRow = false;
 		createGrid(n);
 	});
 
@@ -46,6 +56,15 @@ $(document).ready(function() {
 		$("#container").empty();
 		setting = "increment";
 		color = "blue";
+		createGrid(n);
+	});
+
+	$("#rainbow").click(function() {
+		$("#container").empty();
+		setting = "increment";
+		color = "rainbow";
+		hue = 0;
+		evenRow = false;
 		createGrid(n);
 	});
 
@@ -95,6 +114,27 @@ $(document).ready(function() {
 					break;
 				case "blue":
 					cell.css("background-color", "rgb(0, 0, 255)");
+					break;
+				case "rainbow":
+					cell.css("background-color", "hsl("+hue+", 100%, 50%)");
+					if (evenRow) {
+						hue -= 360/(n*n);
+						count++;
+						if (count === n) {
+							hue += 360/n;
+							count = 0;
+							evenRow = false;
+						}
+					}
+					else {
+						hue += 360/(n*n);
+						count++;
+						if (count === n) {
+							hue += 360/n;
+							count = 0;
+							evenRow = true;
+						}
+					}
 					break;
 				default:
 					cell.css("background-color", "rgb(0, 0, 0)");
